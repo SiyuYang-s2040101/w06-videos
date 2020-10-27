@@ -1,11 +1,5 @@
 import numpy as np
-import matplotlib.pyplot as plt
-import time
-
-# Set up a random list of integers
-n = 1000
-rng = np.random.default_rng()
-my_list = rng.integers(1, n+1, size=n)
+import timeit
 
 def bubble_sort(arr):
     '''
@@ -17,6 +11,7 @@ def bubble_sort(arr):
     # Make a copy first
     sorted_arr = arr.copy()
     counter = 1
+    N = len(sorted_arr)
 
     # Keep looping over the list until there are no more swaps
     while True:
@@ -24,7 +19,7 @@ def bubble_sort(arr):
         swapped = False
 
         # Compare each consecutive pair of elements
-        for i in range(len(sorted_arr)-counter):
+        for i in range(N-counter):
             if sorted_arr[i] > sorted_arr[i+1]:
                 # Swap!
                 sorted_arr[i], sorted_arr[i+1] = sorted_arr[i+1], sorted_arr[i]
@@ -36,54 +31,7 @@ def bubble_sort(arr):
         # If at this point swapped is still False, we can finish
         if not swapped:
             return sorted_arr
-
-#  my_list_bubble = bubble_sort(my_list)
-#  my_list_sorted = sorted(my_list)
-#  print(np.all(my_list_bubble == my_list_sorted))
-
-# Time bubble_sort
-def time_sort(sort_function, lengths, repeat=1):
-    '''
-    Measures the time taken by sort_function to sort large lists.
-
-    Input:
-        sort_function (function): the function to benchmark
-        lengths (list or array): list of array sizes to generate
-        repeat (int): run the algorithm several times per array,
-            compute average time over multiple runs
-    '''
-    # Set up RNG
-    rng = np.random.default_rng()
-
-    # Array sizes
-
-    # Keep track of the times
-    times = []
-    for n in lengths:
-        # Set up the array
-        arr = rng.integers(1, n+1, size=n)
-
-        # Run sort_function and time it 5 times
-        t = 0
-        for i in range(repeat):
-            t0 = time.time()
-            sort_function(arr)
-            t += time.time() - t0
-        times.append(t / repeat)
-
-    return lengths, times
-
-
-lengths, times = time_sort(bubble_sort, range(500, 3001, 500))
-
-#  # Plot the results
-#  fig, ax = plt.subplots(1, 2)
-#  ax[0].plot(lengths, times, 'kx')
-#  ax[0].set_xlabel('Array size')
-#  ax[0].set_ylabel('Execution time (s)')
-#  ax[1].plot(np.log(np.array(lengths)), np.log(np.array(times)), 'kx')
-#  plt.show()
-
+        
 # Merge sort
 def merge(arr1, arr2):
     '''
@@ -125,21 +73,16 @@ def merge_sort(arr):
     sorted_arr = merge(arr1, arr2)
     return sorted_arr
 
+
 rng = np.random.default_rng()
-#  arr = rng.integers(1, 1001, size=1000)
-#  sorted_arr = merge_sort(arr)
-#  print(sorted_arr)
+n = 2000
+arr = rng.integers(1, n+1, size=n)
 
+my_code = '''
+arr = rng.integers(1, n+1, size=n)
 
-#  lengths, times = time_sort(merge_sort,
-                           #  lengths=[1000, 2000, 5000, 10000, 20000, 30000, 40000, 50000],
-                           #  repeat=5)
+bubble_sort(arr)
+'''
 
-# Plot the results
-fig, ax = plt.subplots()
-ax.plot(lengths, times, 'kx')
-ax.set_xlabel('Array size')
-ax.set_ylabel('Execution time (s)')
-plt.show()
-
-
+t = timeit.timeit(my_code, number=10, globals=globals())
+print(t/10)
