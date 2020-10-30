@@ -3,6 +3,8 @@
 Walnuts_list = [['carb', 3.7], ['fat', 69.1], ['protein', 15.5]]
 Cereal_list = [['fat', 1.8], ['carb', 70], ['protein', 11]]
 
+# {key1: value1, key2:value2, ...}
+
 Walnuts = {'carb': 3.7, 'fat': 69.1, 'protein': 15.5}
 Cereal = {'fat': 1.8, 'carb': 70, 'protein': 11}
 
