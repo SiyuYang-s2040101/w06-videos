@@ -3,13 +3,18 @@
 mytuple = (2, 4, 4, 6)
 mylist = [2, 4, 4, 6]
 
-# for num in mylist:
-#     print(num)
-#
-#
-# for num in mytuple:
-#     print(num)
+# iteraction - ok
+for num in mylist:
+#    print(num)
+for num in mytuple:
+#    print(num)
 
+# index - ok
+
+# tuple - immutable
+# list - mutable
+
+# tuple - can be unpacked to several varibales
 a, b, c, d = mylist
 
 print(a)
